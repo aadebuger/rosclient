@@ -36,6 +36,10 @@ aux_source_directory(/Users/aadebuger/ros_catkin_wsindigo/src/ros_comm/roscpp/sr
 
 aux_source_directory(/Users/aadebuger/ros_catkin_wsindigo/src/ros_comm/roscpp/src/libros/transport  librostransport )
 
+
+aux_source_directory(/Users/aadebuger/ros_catkin_wsindigo/src/actionlib/src  libactionlib )
+
+
 #aux_source_directory(/Users/aadebuger/ros_catkin_wsindigo/src/ros_comm/rosconsole/src/rosconsole rosconsole )
 
 file(GLOB_RECURSE rosconsole "/Users/aadebuger/ros_catkin_wsindigo/src/ros_comm/rosconsole/src/rosconsole/*.cpp" )
@@ -74,8 +78,48 @@ add_library( libroslib  ${libros}  ${librostransport} ${rosconsole}  ${rosconsol
 add_library( xmlrpcpplib  ${xmlrpcpp} ) 
 
 
+add_library(topic_tools /Users/aadebuger/Documents/github/ros_comm/tools/topic_tools/src/shape_shifter.cpp /Users/aadebuger/Documents/github/ros_comm/tools/topic_tools/src/parse.cpp)
+
+add_library( actionlib  ${libactionlib} ) 
+
+
 include_directories( ${Boost_INCLUDE_DIR} )
 include_directories( /Users/aadebuger/ros_catkin_wsindigo/install_isolated/include )
 
+include_directories(  include  )
+include_directories( dep/rosserial/rosserial_server/include)
+include_directories( rosserial_ws/include)
+include_directories( chores_ws/devel/include)
+
+include_directories( /Users/aadebuger/Documents/github/ros_comm/tools/topic_tools/include )
+include_directories( /Users/aadebuger/ros_catkin_wsindigo/src/actionlib/include )
+
+
+
 add_executable( ${PROJECT_NAME} main.cpp )
+add_executable( listener listener.cpp )
+add_executable( add_two_ints_client add_two_ints_client.cpp )
+
+add_executable( threadednode threadednode.cpp )
+add_executable( IamPub   IamPub.cpp )
+add_executable( serial_node   serial_node.cpp  )
+
+add_executable( SimpleActionClient  SimpleActionClient.cpp  )
+add_executable( turtle_teleop_joy  turtle_teleop_joy.cpp  )
+
+
+
 target_link_libraries( ${PROJECT_NAME} rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
+target_link_libraries( listener  rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
+
+target_link_libraries( threadednode   rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
+
+
+target_link_libraries( IamPub   rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
+target_link_libraries( serial_node   topic_tools rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
+
+target_link_libraries( SimpleActionClient   actionlib topic_tools rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
+
+target_link_libraries( turtle_teleop_joy   actionlib topic_tools rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
+
+
