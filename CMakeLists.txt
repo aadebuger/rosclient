@@ -92,7 +92,15 @@ include_directories( rosserial_ws/include)
 include_directories( chores_ws/devel/include)
 
 include_directories( /Users/aadebuger/Documents/github/ros_comm/tools/topic_tools/include )
+include_directories( /Users/aadebuger/Documents/github/ros_comm/utilities/message_filters/include )
+
+
+
 include_directories( /Users/aadebuger/ros_catkin_wsindigo/src/actionlib/include )
+
+include_directories( /Users/aadebuger/ros_catkin_wsindigo/src/geometry/tf/include )
+include_directories( /Users/aadebuger/ros_catkin_wsindigo/src/ros/include )
+
 
 
 
@@ -107,6 +115,9 @@ add_executable( serial_node   serial_node.cpp  )
 add_executable( SimpleActionClient  SimpleActionClient.cpp  )
 add_executable( turtle_teleop_joy  turtle_teleop_joy.cpp  )
 
+add_executable( generic_laser_filter_node  generic_laser_filter_node.cpp  )
+
+add_executable( irobot  irobot.cpp  )
 
 
 target_link_libraries( ${PROJECT_NAME} rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
@@ -122,4 +133,5 @@ target_link_libraries( SimpleActionClient   actionlib topic_tools rostimelib lib
 
 target_link_libraries( turtle_teleop_joy   actionlib topic_tools rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
 
+target_link_libraries( irobot   actionlib topic_tools rostimelib libroslib  xmlrpcpplib ${Boost_LIBRARIES} ${LOG4CXX_LIBRARIES})
 
